@@ -12,21 +12,17 @@ services:
       - PORT=3000
       - PG_HOST=node_ts_db
       - PG_PORT=5432
-      - PG_USERNAME=root
+      - PG_USERNAME=postgres
       - PG_DATABASE=clean-arch-node-ts
       - PG_PASSWORD=admin
     ports:
-      - '3000:3000'
+      - '13000:3000'
       - '9228:9228'
     command: npm run dev
-    depends_on:
-      node_ts:
-        condition: service_healthy
   node_ts_db:
-    image: postgres:latest
+    image: postgres:alpine
     container_name: node_ts_db
     environment:
-      POSTGRES_USER: root
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: clean-arch-node-ts
     volumes:

@@ -30,5 +30,8 @@
   "include": [
     "src",
     "tests"
-  ]
+  ],
+  "ts-node": {
+    "swc": true
+  }
 }
