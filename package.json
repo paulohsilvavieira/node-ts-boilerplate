@@ -2,7 +2,6 @@
   "name": "node-ts-boilerplate",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
   "scripts": {
     "test": "jest --passWithNoTests  --runInBand --no-cache  --silent",
     "test:verbose": "jest --passWithNoTests --runInBand",
@@ -15,7 +14,10 @@
     "clean": "rimraf dist",
     "build": "npm run clean && tsc -p tsconfig-build.json",
     "tsc-alias": "npx tsc-alias",
-    "dev": "nodemon  -L --watch 'src/' --exec 'ts-node src/index.ts' -e ts"
+    "dev:debug": "nodemon -L --inspect=0.0.0.0:9228 src/main/server.ts",
+    "dev": "nodemon -L src/main/server.ts",
+    "docker": "docker-compose up -d node_ts_terminal --no-recreate && docker exec -it node_ts_terminal /bin/sh",
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js -f src/ormconfig.ts -c crud_node"
   },
   "keywords": [
     "node-ts-boilerplate"
@@ -51,6 +53,7 @@
     "faker": "^5.5.3",
     "mjml": "^4.10.4",
     "module-alias": "^2.2.2",
+    "nodemon": "^2.0.22",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

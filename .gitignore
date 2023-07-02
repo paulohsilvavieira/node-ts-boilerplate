@@ -4,3 +4,6 @@ dist
 ormconfig.json
 .idea
 .env
+
+.docker
+.env.docker

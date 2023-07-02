@@ -7,26 +7,38 @@ services:
       context: .
     volumes:
       - .:/app
+      - /app/node_modules
     container_name: node_ts
-    environment:
-      - PORT=3000
-      - PG_HOST=node_ts_db
-      - PG_PORT=5432
-      - PG_USERNAME=postgres
-      - PG_DATABASE=clean-arch-node-ts
-      - PG_PASSWORD=admin
+    env_file:
+      - .env.docker
     ports:
       - '13000:3000'
       - '9228:9228'
     command: npm run dev
+  node_ts_terminal:
+    tty: true
+    stdin_open: true
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    container_name: node_ts_terminal
+    env_file:
+      - .env.docker
+    ports:
+      - '13000:3000'
+      - '9228:9228'
+    depends_on:
+      - node_ts_db
   node_ts_db:
     image: postgres:alpine
     container_name: node_ts_db
     environment:
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: clean-arch-node-ts
+      POSTGRES_DB: crud_node
     volumes:
-      - ${HOME}/docker/postgresql/node_ts_db:/var/lib/postgresql
+      - ./.docker/node_ts_db:/var/lib/postgresql
     ports:
       - "5434:5432"
     healthcheck:
