@@ -2,20 +2,20 @@ version: '3.9'
 volumes:
   node_modules:
 services:
-  node_ts:
+  crud_node:
     build:
       context: .
     volumes:
       - .:/app
       - /app/node_modules
-    container_name: node_ts
+    container_name: crud_node
     env_file:
       - .env.docker
     ports:
       - '13000:3000'
       - '9228:9228'
-    command: npm run dev
-  node_ts_terminal:
+    command: npm run dev:debug
+  terminal:
     tty: true
     stdin_open: true
     build:
@@ -23,22 +23,22 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    container_name: node_ts_terminal
+    container_name: terminal
     env_file:
       - .env.docker
     ports:
       - '13000:3000'
       - '9228:9228'
     depends_on:
-      - node_ts_db
-  node_ts_db:
+      - crud_node_db
+  crud_node_db:
     image: postgres:alpine
-    container_name: node_ts_db
+    container_name: crud_node_db
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: crud_node
     volumes:
-      - ./.docker/node_ts_db:/var/lib/postgresql
+      - ./.docker/crud_node_db:/var/lib/postgresql
     ports:
       - "5434:5432"
     healthcheck:

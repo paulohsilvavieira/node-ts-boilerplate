@@ -30,5 +30,10 @@
   ## Running API
 
   ```sh
-  docker-compose up -d
+  docker-compose up -d crud_node
   ```
+
+ ## PORTS
+
+Port Application: 13000
+Port Debug: 9228
